@@ -25,11 +25,12 @@ buildscript {
 
 plugins {
   id "de.undercouch.download" version "3.4.3"
-  id "com.moowork.node" version "1.2.0"
+  // id "com.moowork.node" version "1.2.0" // [cloud] moowork不再支持 @see https://stackoverflow.com/questions/69488060/could-not-find-org-nodejsnode
+  id "com.github.node-gradle.node" version "2.2.3"
 }
 
 ext {
-  swaggerUiVersion = '3.17.1'
+  swaggerUiVersion = '3.17.1-cloud' // [cloud] 3.17.1-cloud
   swaggerUiDist = "build/libs/swagger-ui-dist.zip"
   swaggerUiExplodedDir = "swagger-ui-${swaggerUiVersion}/dist/"
   downloadUrl = "https://github.com/swagger-api/swagger-ui/archive/v${swaggerUiVersion}.zip"
@@ -64,7 +65,7 @@ task swaggerUiDownload {
 }
 
 task unzip(type: Copy) {
-  dependsOn swaggerUiDownload
+  // dependsOn swaggerUiDownload // [cloud] swagger-ui-cloud直接zip到destinationZip，不走download过程
   from zipTree(file(destinationZip))
   include "*/dist/**"
   into file("${buildDir}")

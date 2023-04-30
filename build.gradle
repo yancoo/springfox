@@ -78,14 +78,14 @@ subprojects {
   sourceCompatibility = jdkVersion
   targetCompatibility = jdkVersion
   group = 'io.springfox'
-  version = project.rootProject.version
+  version = '2.9.2-cloud' //project.rootProject.version // [cloud] 没找到外部定义的地方，这里暂写死
 
   task allDeps(type: DependencyReportTask) {}
 
   jacoco {
     toolVersion = "$jacocoVersion"
   }
-  
+
   jacocoTestReport {
     reports {
       xml.enabled true

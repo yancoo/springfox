@@ -1,3 +1,9 @@
+# springfox-swagger-ui 2.9.2 扩展 yan 2023.4.27
+- ./gradlew build -x test
+  - 如果执行./gradlew clean，则重新运行swagger-ui/zip.sh，生成依赖的swagger-ui 3.17.1-cloud.zip
+- ./gradlew publishToMavenLocal
+- deploy.aiapp.sh
+  - 发布2.9.2-cloud到nexus.lab.bigai.site
 
 # Springfox
 
