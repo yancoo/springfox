@@ -36,13 +36,60 @@ window.onload = () => {
             },
           });
       const resources = await resourcesResponse.json();
+
+      const cloudResourcesResponse = await fetch(
+        baseUrl + "/swagger-cloud-resources",
+        {
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        });
+      const cloudResources = await cloudResourcesResponse.json();
+
       resources.forEach(resource => {
         if (resource.url.substring(0, 4) !== 'http') {
           resource.url = baseUrl + resource.url;
         }
       });
-
-      window.ui = getUI(baseUrl, resources, configUI, configSecurity);
+      var mergedResources = []
+      var cloudBaseUrl = baseUrl 
+      var index = cloudBaseUrl.indexOf("//")
+      var endIndex =  -1
+      if( index === -1){// xxx/yy => xxx
+        endIndex = cloudBaseUrl.indexOf("/")
+        if( endIndex != -1){
+          cloudBaseUrl = cloudBaseUrl.substring(0, endIndex)
+        }
+      }else{ // http://xxx/yy => http://xxx
+        endIndex = cloudBaseUrl.substring(index+2).indexOf("/")
+        if( endIndex != -1){
+          cloudBaseUrl = cloudBaseUrl.substring(0, index+2+endIndex)
+        }
+      }
+      cloudResources.forEach(resource =>{
+        if (resource.url.substring(0, 4) !== 'http') {
+          resource.url = cloudBaseUrl + resource.url;
+        }
+        mergedResources.push(resource)
+      })
+      for(var i = resources.length - 1; i >= 0 ; i --){
+        var er = resources[i]
+        var exist = false // default 或 group已存在，则跳过
+        mergedResources.forEach(mr => {
+          if( mr.url === er.url ){
+            exist = true
+          }
+        })
+        if( !exist ){// 不存在时，头部插入
+          mergedResources.unshift(er)
+        }
+      }
+      mergedResources.forEach(resource => {
+        console.log("resource", resource)
+      })
+      window.ui = getUI(baseUrl, mergedResources, configUI, configSecurity);
     } catch (e) {
       const retryURL = await prompt(
         "Unable to infer base url. This is common when using dynamic servlet registration or when" +

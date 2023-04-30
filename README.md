@@ -1,9 +1,17 @@
-# springfox-swagger-ui 2.9.2 扩展 yan 2023.4.27
-- ./gradlew build -x test
+# springfox/springfox-swagger-ui 2.9.2 扩展 yan 2023.4.27
+
+## 编译发布
+- ./gradlew build -x test publishToMavenLocal
   - 如果执行./gradlew clean，则重新运行swagger-ui/zip.sh，生成依赖的swagger-ui 3.17.1-cloud.zip
-- ./gradlew publishToMavenLocal
+  - build结果同时发布到maven local
 - deploy.aiapp.sh
-  - 发布2.9.2-cloud到nexus.lab.bigai.site
+  - 发布到local repository
+
+## 改进
+- 支持认证记忆，刷新浏览器token仍然有效（7天有效期）
+- 支持cloud场景不同服务api集成
+  - 浏览器内切换服务，不必来回切换网址
+  - 记住切换选择，刷新浏览器使用上次选择
 
 # Springfox
 
