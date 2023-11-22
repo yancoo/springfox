@@ -16,7 +16,7 @@ VERSION=$(cat .version)
 
 echo springfox version $VERSION
 
-# io/springfox/springfox-swagger-ui/2.9.2-cloud
+# io/springfox/springfox-swagger-ui/2.9.2.cloud
 #find . -type f -not -path './mavenimport\.sh*' -not -path '*/\.*' -not -path '*/\^archetype\-catalog\.xml*' -not -path '*/\^maven\-metadata\-local*\.xml' -not -path '*/\^maven\-metadata\-deployment*\.xml' | sed "s|^\./||" | xargs -I '{}' curl -u "admin:adminX2022" -X PUT -v -T {} 'http://nexus.lab.bigai.site/repository/aiapp/'/{} ;
 
 cd ~/.m2/repository/
